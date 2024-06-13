@@ -10,10 +10,11 @@ function App() {
   });
 
   let content;
+  console.log(projectSelected.projects)
   if (projectSelected.projectId === undefined) {
     content = <NoProjectSelected onProjectAdd={onProjectAdd} />;
   } else if (projectSelected.projectId === null) {
-    content = <AddProjectModal />;
+    content = <AddProjectModal onSave={handleSaveProject} onCancel={handleCancel}/>;
   }
 
   function onProjectAdd() {
@@ -24,9 +25,29 @@ function App() {
       };
     });
   }
+
+  function handleSaveProject(projectData) {
+    setProjectSelected((prevProjects) => {
+      const newProject = { ...projectData, id: Math.random() };
+      return {
+        ...prevProjects,
+        projectId: undefined,
+        projects: [...prevProjects.projects, newProject],
+      };
+    });
+  }
+
+  function handleCancel(){
+    setProjectSelected(prevProjects=>{
+      return{
+        ...prevProjects,
+        projectId: undefined
+      }
+    })
+  }
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar onProjectAdd={onProjectAdd}/>
+      <Sidebar onProjectAdd={onProjectAdd} projects={projectSelected.projects}/>
       {content}
     </main>
   );
