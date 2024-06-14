@@ -31,7 +31,12 @@ export default function AddProjectModal({ onSave, onCancel }) {
   return (
     <div className="w-[35rem] mt-16">
       <Modal ref={modal} buttonLabel="Okay">
-        <p>All fields are required</p>
+      <h2 className="text-xl font-bold text-stone-700 my-4">
+        Invalid Input!
+      </h2>
+      <p className="text-stone-600 mb-4">
+        Please make sure you provide a valid value for all input fields.
+      </p>
       </Modal>
       <menu className="flex items-center justify-end gap-4 my-4">
         <li>
