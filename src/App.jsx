@@ -10,7 +10,6 @@ function App() {
   });
 
   let content;
-  console.log(projectSelected.projects)
   if (projectSelected.projectId === undefined) {
     content = <NoProjectSelected onProjectAdd={onProjectAdd} />;
   } else if (projectSelected.projectId === null) {
