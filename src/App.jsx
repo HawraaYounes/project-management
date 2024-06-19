@@ -23,12 +23,20 @@ function App() {
       };
       return {
         ...prevProjects,
-        tasks: [newTask,...prevProjects.tasks],
+        tasks: [newTask, ...prevProjects.tasks],
       };
     });
   }
 
-  function handleDeleteTask() {}
+  function handleDeleteTask() {
+    setProjectSelected((prevProjects) => {
+      return {
+        ...prevProjects,
+        projectId: undefined,
+        tasks: prevProjects.tasks.filter((task) => task.id !== id),
+      };
+    });
+  }
 
   function onProjectAdd() {
     setProjectSelected((prevProjects) => {
@@ -86,6 +94,7 @@ function App() {
       onDelete={handleDeleteProject}
       onAddTask={handleAddTask}
       onDeleteTask={handleDeleteTask}
+      tasks={projectSelected.tasks}
     />
   );
   if (projectSelected.projectId === undefined) {

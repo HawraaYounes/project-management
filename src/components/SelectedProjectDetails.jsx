@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Tasks from "./Tasks";
 
-const SelectedProjectDetails = ({ project, onDelete, onAddTask, onDeleteTask }) => {
+const SelectedProjectDetails = ({ project, onDelete, onAddTask, onDeleteTask, tasks }) => {
   const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -17,7 +17,7 @@ const SelectedProjectDetails = ({ project, onDelete, onAddTask, onDeleteTask }) 
         <p className="mb-4 text-stone-400">{formattedDate}</p>
         <p className="text-stone-600 whitespace-pre-wrap">{project.description}</p>
       </header>
-      <Tasks onAddTask={onAddTask} onDeleteTask={onDeleteTask}/>
+      <Tasks onAddTask={onAddTask} onDeleteTask={onDeleteTask} tasks={tasks}/>
     </div>
   );
 };
