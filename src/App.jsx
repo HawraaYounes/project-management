@@ -28,11 +28,10 @@ function App() {
     });
   }
 
-  function handleDeleteTask() {
+  function handleDeleteTask(id) {
     setProjectSelected((prevProjects) => {
       return {
         ...prevProjects,
-        projectId: undefined,
         tasks: prevProjects.tasks.filter((task) => task.id !== id),
       };
     });
