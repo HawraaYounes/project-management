@@ -9,15 +9,9 @@ function App() {
     projectId: undefined,
     projects: [],
   });
-const selectedProject=projectSelected.projects.find(project=> project.id === projectSelected.projectId )
-  
-  console.log("hellooo",selectedProject)
-  let content=<SelectedProjectDetails project={selectedProject}/>
-  if (projectSelected.projectId === undefined) {
-    content = <NoProjectSelected onProjectAdd={onProjectAdd} />;
-  } else if (projectSelected.projectId === null) {
-    content = <AddProjectModal onSave={handleSaveProject} onCancel={handleCancel}/>;
-  }
+  const selectedProject = projectSelected.projects.find(
+    (project) => project.id === projectSelected.projectId
+  );
 
   function onProjectAdd() {
     setProjectSelected((prevProjects) => {
@@ -39,26 +33,52 @@ const selectedProject=projectSelected.projects.find(project=> project.id === pro
     });
   }
 
- function handleSelectProject(id){
-  setProjectSelected((prevProjects) => {
-    return {
-      ...prevProjects,
-      projectId: id,
-    };
-  });
- }
-
-  function handleCancel(){
-    setProjectSelected(prevProjects=>{
-      return{
+  function handleSelectProject(id) {
+    setProjectSelected((prevProjects) => {
+      return {
         ...prevProjects,
-        projectId: undefined
-      }
-    })
+        projectId: id,
+      };
+    });
   }
+
+  function handleCancel() {
+    setProjectSelected((prevProjects) => {
+      return {
+        ...prevProjects,
+        projectId: undefined,
+      };
+    });
+  }
+
+  function handleDeleteProject() {
+    setProjectSelected((prevProjects) => {
+      return {
+        ...prevProjects,
+        projectId: undefined,
+        projects: prevProjects.projects.filter(
+          (project) => project.id !== prevProjects.projectId
+        ),
+      };
+    });
+  }
+
+  let content = <SelectedProjectDetails project={selectedProject} onDelete={handleDeleteProject} />;
+  if (projectSelected.projectId === undefined) {
+    content = <NoProjectSelected onProjectAdd={onProjectAdd} />;
+  } else if (projectSelected.projectId === null) {
+    content = (
+      <AddProjectModal onSave={handleSaveProject} onCancel={handleCancel} />
+    );
+  }
+
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar onProjectAdd={onProjectAdd} projects={projectSelected.projects} onSelect={handleSelectProject}/>
+      <Sidebar
+        onProjectAdd={onProjectAdd}
+        projects={projectSelected.projects}
+        onSelect={handleSelectProject}
+      />
       {content}
     </main>
   );
